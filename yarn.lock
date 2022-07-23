@@ -2810,6 +2810,11 @@ file-entry-cache@^6.0.1:
   dependencies:
     flat-cache "^3.0.4"
 
+file-saver@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
+  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
+
 files-from-path@^0.2.4:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/files-from-path/-/files-from-path-0.2.6.tgz#a093918d67ebfe1d50fffef926855574146cf571"
