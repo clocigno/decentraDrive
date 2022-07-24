@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Upload, List, Avatar } from "antd";
+import { Button, Upload, List, PageHeader } from "antd";
 import {
   PaperClipOutlined,
   DownloadOutlined,
@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { Web3Storage } from "web3.storage";
 import { EthereumAuthProvider, SelfID, WebClient } from "@self.id/web";
 import { saveAs } from "file-saver";
+import "antd/dist/antd.css";
 
 export default function Home() {
   const litClient = new LitJsSdk.LitNodeClient();
@@ -25,6 +26,8 @@ export default function Home() {
 
   const dataModeldefinition =
     "kjzl6cwe1jw145sb2fhp7iynkoxa7obhwb2t16czkda1qznodzlreojojqnj417";
+
+  const [account, setAccount] = useState("");
 
   async function connectToLit() {
     await litClient.connect();
@@ -97,6 +100,9 @@ export default function Home() {
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
+
+    setAccount(accounts[0]);
+
     const authProvider = new EthereumAuthProvider(window.ethereum, accounts[0]);
 
     const client = new WebClient({
@@ -229,20 +235,34 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Your Drive</title>
-        <meta name="description" content="Your Drive" />
+        <title>DecentraDrive</title>
+        <meta
+          name="description"
+          content="Load your files to decentralized cloud"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <PageHeader
+        className="site-page-header"
+        title={
+          <img
+            src="https://ipfs.io/ipfs/QmVmuW5xidyiT7nAA5rWbRrL7jjiNmdneHrDqcW526SCTW"
+            className="ipfs-logo"
+          />
+        }
+        extra={[account && <h1>{account}</h1>]}
+      />
+
+      <main>
         <Upload {...props}>
           <Button icon={<UploadOutlined />}>Upload</Button>
         </Upload>
         {files && (
           <List
-            itemLayout="horizonatl"
+            itemLayout="vertical"
+            size="large"
             dataSource={files}
-            bordered
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
@@ -251,16 +271,17 @@ export default function Home() {
                   description={`CID: ${item.cid}`}
                 />
                 <div>
-                  <button
+                  <Button
+                    type="link"
                     onClick={() =>
                       retrieveFile(item.cid, item.encryptedSymmetricKey)
                     }
                   >
                     <DownloadOutlined />
-                  </button>
-                  <button onClick={() => deleteFile(item.cid)}>
+                  </Button>
+                  <Button type="link" onClick={() => deleteFile(item.cid)}>
                     <DeleteOutlined />
-                  </button>
+                  </Button>
                 </div>
               </List.Item>
             )}

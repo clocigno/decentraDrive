@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.site-page-header {
+  height: 100px;
+  overflow: hidden;
+  margin: 0;
+}
+
+.ipfs-logo {
+  position: relative;
+  bottom: 75px;
+}
